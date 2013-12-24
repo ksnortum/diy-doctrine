@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app 
+	version="2.5"
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"      	 
+	xsi:schemaLocation="
+		http://java.sun.com/xml/ns/javaee 
+		http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+	<!-- Load a dispatch servlet for MVC -->
+	<servlet>
+		<servlet-name>doctrine</servlet-name>
+		<servlet-class>
+			org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- URLs look like "http://host-name:8080/doctrine/xxx" -->
+	<servlet-mapping>
+	    <servlet-name>doctrine</servlet-name>
+	    <url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Load configurations files based on context -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<!-- Where should ContextLoaderListener look for configuration files? -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/doctrine-servlet.xml
+		</param-value>
+	</context-param>
+	
+	<!-- Other possible config file paths
+			/WEB-INF/spitter-security.xml
+			classpath:service-context.xml
+			classpath:persistence-context.xml
+			classpath:dataSource-context.xml -->
+                   
+</web-app>
