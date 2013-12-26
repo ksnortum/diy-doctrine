@@ -46,7 +46,7 @@ public class EditorController {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String addEditorFromForm(@Valid Editor editor,
 			BindingResult bindingResult) throws ClassNotFoundException,
 			IOException {

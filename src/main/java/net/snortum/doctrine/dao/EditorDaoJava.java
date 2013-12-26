@@ -1,35 +1,42 @@
 package net.snortum.doctrine.dao;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import net.snortum.doctrine.model.Editor;
+import net.snortum.doctrine.model.PropFile;
 
 import org.apache.log4j.Logger;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * This is the DAO for editors, implemented to save the Java object list of
- * {@link Editor}s to a local file. This is slow and not portable. It Should be
+ * {@link Editor}s to a local file. This is slow and not portable. It should be
  * used to testing only.
  * 
  * @author Knute Snortum
  * @version 0.1
- * 
  */
 @Component
 public class EditorDaoJava implements EditorDao {
 
-	private final static Logger LOG = Logger.getLogger( EditorDaoJava.class );
+	private final static Logger LOG = Logger.getLogger(EditorDaoJava.class);
 	private final static String EDITORS_FILE_NAME = "editors.ser";
+
+	@Autowired
+	private ServletContext context;
+
+	private PropFile propFile = PropFile.getInstance();
 
 	/**
 	 * Save an {@link Editor} to a Java object file.
@@ -39,37 +46,44 @@ public class EditorDaoJava implements EditorDao {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	@SuppressWarnings( "unchecked" )
+	@SuppressWarnings("unchecked")
 	@Override
-	public void saveEditor( Editor editor ) throws IOException,
+	public synchronized void saveEditor(Editor editor) throws IOException,
 			ClassNotFoundException {
 
 		List<Editor> editors = new ArrayList<Editor>();
-		FileLock readLock = null;
+		boolean tryAgain = true;
 
 		// Get current list of editors from disk, if present
-		try (FileInputStream fis = new FileInputStream( getFilePathName() )) {
-			readLock = fis.getChannel().lock();
+		do {
+			try (FileInputStream fis = new FileInputStream(getFileName())) {
+				tryAgain = false;
 
-			try (ObjectInputStream ois = new ObjectInputStream( fis )) {
-				editors = (List<Editor>) ois.readObject();
-			}
-		}
-		catch ( FileNotFoundException fnfe ) {
-			if ( LOG.isInfoEnabled() ) {
-				LOG.info( "Creating a new editors file" );
-			}
-		}
+				try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+					editors = (List<Editor>) ois.readObject();
+				} catch (EOFException eofe) {
+					// This is okay the first time because nothing will be in the file
+				}
+			} catch (FileNotFoundException fnfe) {
+				if (LOG.isInfoEnabled()) {
+					LOG.info("Creating a new editors file");
+				}
 
-		editors.add( editor );
+				try (FileOutputStream fos = new FileOutputStream(getFileName())) {
+				} catch (IOException ioe) {
+					LOG.error("Could not create \"" + getFileName()
+							+ "\" for the first time", ioe);
+					return;
+				}
+			}
+		} while (tryAgain);
+
+		editors.add(editor);
 
 		// Write updated list of editors back to disk
-		try (FileOutputStream fos = new FileOutputStream( getFilePathName() )) {
-			try (ObjectOutputStream oos = new ObjectOutputStream( fos )) {
-				oos.writeObject( editors );
-			}
-			finally {
-				readLock.release();
+		try (FileOutputStream fos = new FileOutputStream(getFileName())) {
+			try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+				oos.writeObject(editors);
 			}
 		}
 	}
@@ -83,23 +97,23 @@ public class EditorDaoJava implements EditorDao {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	@SuppressWarnings( "unchecked" )
+	@SuppressWarnings("unchecked")
 	@Override
-	public Editor getEditor( String username ) throws IOException,
+	public Editor getEditor(String username) throws IOException,
 			ClassNotFoundException {
 
 		List<Editor> editors = new ArrayList<Editor>();
 
 		// Get current list of editors from disk, if present
-		try (FileInputStream fis = new FileInputStream( getFilePathName() )) {
-			try (ObjectInputStream ois = new ObjectInputStream( fis )) {
+		try (FileInputStream fis = new FileInputStream(getFileName())) {
+			try (ObjectInputStream ois = new ObjectInputStream(fis)) {
 				editors = (List<Editor>) ois.readObject();
 			}
 		}
 
 		Editor editor = null;
-		for ( Editor thisEditor : editors ) {
-			if ( thisEditor.getUsername().equalsIgnoreCase( username ) ) {
+		for (Editor thisEditor : editors) {
+			if (thisEditor.getUsername().equalsIgnoreCase(username)) {
 				editor = thisEditor;
 				break;
 			}
@@ -108,14 +122,34 @@ public class EditorDaoJava implements EditorDao {
 		return editor;
 	}
 
+	/** @return the full path and name of the editors file */
+	private String getFileName() {
+		return getPropFile().getDatabaseDir() + EDITORS_FILE_NAME;
+	}
+
+	/** @return the servlet context */
+	public ServletContext getContext() {
+		return context;
+	}
+
 	/**
-	 * @return a path and file name relative to the resource directory
+	 * @param context
+	 *            the context to set, mostly for testing
 	 */
-	private String getFilePathName() {
-		ClassPathResource file = new ClassPathResource( EDITORS_FILE_NAME );
-		if ( LOG.isInfoEnabled() ) {
-			LOG.info( "File path is " + file.getPath() );
-		}
-		return file.getPath();
+	public void setContext(ServletContext context) {
+		this.context = context;
+	}
+
+	/** @return the propFile object */
+	public PropFile getPropFile() {
+		return propFile;
+	}
+
+	/**
+	 * @param propFile
+	 *            the propFile to set, mostly for testing
+	 */
+	public void setPropFile(PropFile propFile) {
+		this.propFile = propFile;
 	}
 }

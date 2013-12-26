@@ -13,7 +13,7 @@
 
 <h2>Sign up for DIY Doctrine</h2>
 
-<sf:form method="POST" modelAttribute="editor">
+<sf:form method="POST" modelAttribute="editor" action="update">
 	<fieldset>
 		<table cellspacing="0">
 			<tr>
