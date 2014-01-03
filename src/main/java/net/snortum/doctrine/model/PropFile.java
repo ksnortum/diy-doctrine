@@ -38,7 +38,6 @@ public class PropFile {
 				LOG.warn( "Cannot find properties file \""
 						+ PROPERTIES_FILE_NAME + "\"", ioe );
 			}
-
 		}
 		return instance;
 	}

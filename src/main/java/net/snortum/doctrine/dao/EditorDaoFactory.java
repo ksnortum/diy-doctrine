@@ -21,15 +21,15 @@ public class EditorDaoFactory {
 		PropFile propFile = PropFile.getInstance();
 		EditorDao dao = null;
 
-		switch (propFile.getDatabaseType()) {
-		case "java":
-			dao = new EditorDaoJava();
-			break;
-		case "postgres":
-			dao = new EditorDaoPostGres();
-			break;
-		default:
-			dao = new EditorDaoJava();
+		switch ( propFile.getDatabaseType() ) {
+			case "java":
+				dao = new EditorDaoJava();
+				break;
+			case "postgres":
+				dao = new EditorDaoPostGres();
+				break;
+			default:
+				dao = new EditorDaoJava();
 		}
 
 		return dao;

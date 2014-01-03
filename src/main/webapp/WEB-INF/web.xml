@@ -32,15 +32,22 @@
 	<!-- Where should ContextLoaderListener look for configuration files? -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			/WEB-INF/doctrine-servlet.xml
-		</param-value>
+		<param-value>/WEB-INF/doctrine-servlet.xml</param-value>
 	</context-param>
 	
-	<!-- Other possible config file paths
+	<!-- Other possible config file paths if config files are split
 			/WEB-INF/spitter-security.xml
 			classpath:service-context.xml
 			classpath:persistence-context.xml
 			classpath:dataSource-context.xml -->
-                   
+			
+	<!-- Tiles HTLM layout -->
+	<!-- org.apache.tiles.web.startup.simple.SimpleTilesListener -->
+	<!-- org.apache.tiles.extras.complete.CompleteAutoloadTilesListener -->
+	<listener>
+		<listener-class>
+			org.apache.tiles.extras.complete.CompleteAutoloadTilesListener
+		</listener-class>
+	</listener>
+      
 </web-app>

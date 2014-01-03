@@ -1,0 +1,14 @@
+@CHARSET "ISO-8859-1";
+
+div#header_left {
+	float: left;
+	width: 30%;
+	text-align: left;
+}
+
+div#header_right {
+	float: left;
+	width: %70;
+	font-style: italic;
+	text-align: right;
+}

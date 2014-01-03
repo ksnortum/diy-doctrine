@@ -2,32 +2,50 @@
 
 body {
 	font-family: Arial, sans serif;
-	margin: 0;
-	padding: 20;
+	margin: 20px;
+	padding: 20px;
 	border-style: solid;
 	border-color: #0000ff;
 }
 
-h1 {
+div#header {
 	background-color: #0000ff;
-	color: white;	
+	color: white;
+	height: 50px;
+	clear: both;
 }
 
-h2 {
-	background-color: #000ef;
-	color: white;
+div#menu {
+	clear: both;
+	float: left;
+	width: 20%;
+	height: 400px;
+}
+
+div#body {
+	float: left;
+	width: 80%;
+	height: 400px;
+}
+
+div#footer {
+	clear: both;
+	border-top: thin;
+	border-color: #0000ff;
+	font-size: small;
 }
 
 li {
 	background-color: lightBlue;
 	width: 100px;
+	list-style-type: none;
 }
 
 input[type="submit"] {
 	border: none;
 	margin: 5;
 	padding: 15;
-	background: lightBlue; 
+	background-color: lightBlue; 
 }
 
 .center {
