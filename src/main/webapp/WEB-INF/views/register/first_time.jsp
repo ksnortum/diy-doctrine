@@ -5,7 +5,7 @@
 
 <sf:form method="POST" modelAttribute="editor" action="update">
 	<fieldset>
-		<table cellspacing="0">
+		<table>
 			<tr>
 				<th><label for="username">Username:</label></th>
 				<td><sf:input path="username" size="30" id="username"/></td>

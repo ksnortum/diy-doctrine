@@ -33,4 +33,6 @@ public interface EditorDao {
 	 */
 	Editor getEditor( String username ) throws IOException,
 			ClassNotFoundException;
+	
+	boolean validateEditor( String username, String password );
 }

@@ -2,20 +2,27 @@ package net.snortum.doctrine.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+
+import org.hibernate.annotations.Entity;
+
 /**
  * Model of a person who edits (sets up) doctrines and Bible verses.
  * 
  * @author Knute Snortum
  * @version 0.1
  */
+
+@Entity
 public class Editor implements Serializable {
-	
-	/** 
+
+	/**
 	 * {@link Editor}
-	 * @version 0.1 
+	 * 
+	 * @version 0.1
 	 */
 	private static final long serialVersionUID = 5450662604532514701L;
-	
+
 	private String username;
 	private String password;
 	private String firstName;
@@ -24,7 +31,7 @@ public class Editor implements Serializable {
 	private boolean canAdd;
 	private boolean canDelete;
 	private boolean deleteApproval;
-	
+
 	/** Create an editor with defaults set */
 	public Editor() {
 		canAdd = false;
@@ -35,12 +42,14 @@ public class Editor implements Serializable {
 	/**
 	 * @return the username
 	 */
+	@Column( name = "username", unique = true, nullable = false, length = 20 )
 	public String getUsername() {
 		return username;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername( String username ) {
 		this.username = username;
@@ -49,12 +58,14 @@ public class Editor implements Serializable {
 	/**
 	 * @return the password
 	 */
+	@Column( name = "password", nullable = false, length = 20 )
 	public String getPassword() {
 		return password;
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword( String password ) {
 		this.password = password;
@@ -63,12 +74,14 @@ public class Editor implements Serializable {
 	/**
 	 * @return the firstName
 	 */
+	@Column( name = "first_name", nullable = false, length = 20 )
 	public String getFirstName() {
 		return firstName;
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName
+	 *            the firstName to set
 	 */
 	public void setFirstName( String firstName ) {
 		this.firstName = firstName;
@@ -77,26 +90,30 @@ public class Editor implements Serializable {
 	/**
 	 * @return the lastName
 	 */
+	@Column( name = "last_name", nullable = false, length = 40 )
 	public String getLastName() {
 		return lastName;
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName
+	 *            the lastName to set
 	 */
 	public void setLastName( String lastName ) {
 		this.lastName = lastName;
 	}
-	
+
 	/**
 	 * @return the email address
 	 */
+	@Column( name = "email", length = 40 )
 	public String getEmail() {
 		return this.email;
 	}
-	
+
 	/**
-	 * @param email the email address
+	 * @param email
+	 *            the email address
 	 */
 	public void setEmail( String email ) {
 		this.email = email;
@@ -105,12 +122,14 @@ public class Editor implements Serializable {
 	/**
 	 * @return whether this editor can add to DB
 	 */
+	@Column( name = "can_add" )
 	public boolean editorCanAdd() {
 		return canAdd;
 	}
 
 	/**
-	 * @param canAdd is this editor allowed to add to DB?
+	 * @param canAdd
+	 *            is this editor allowed to add to DB?
 	 */
 	public void setCanAdd( boolean canAdd ) {
 		this.canAdd = canAdd;
@@ -119,12 +138,14 @@ public class Editor implements Serializable {
 	/**
 	 * @return whether this editor can delete from the DB
 	 */
+	@Column( name = "can_delete" )
 	public boolean editorCanDelete() {
 		return canDelete;
 	}
 
 	/**
-	 * @param canDelete is this editor allowed to delete from the DB?
+	 * @param canDelete
+	 *            is this editor allowed to delete from the DB?
 	 */
 	public void setCanDelete( boolean canDelete ) {
 		this.canDelete = canDelete;
@@ -133,13 +154,14 @@ public class Editor implements Serializable {
 	/**
 	 * @return whether this editor needs approval to delete from the DB
 	 */
+	@Column( name = "needs_approval" )
 	public boolean needsDeleteApproval() {
 		return deleteApproval;
 	}
 
 	/**
-	 * @param deleteApproval does this editor need approval to delete from the
-	 *        database?
+	 * @param deleteApproval
+	 *            does this editor need approval to delete from the database?
 	 */
 	public void setDeleteApproval( boolean deleteApproval ) {
 		this.deleteApproval = deleteApproval;

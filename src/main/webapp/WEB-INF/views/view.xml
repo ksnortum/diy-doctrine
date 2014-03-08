@@ -18,4 +18,9 @@
 		<put-attribute name="body" 
 				value="/WEB-INF/views/register/first_time.jsp" />
 	</definition>
+	
+	<definition name="login/first_time" extends="main">
+		<put-attribute name="body" 
+				value="/WEB-INF/views/login/first_time.jsp" />
+	</definition>
 </tiles-definitions>

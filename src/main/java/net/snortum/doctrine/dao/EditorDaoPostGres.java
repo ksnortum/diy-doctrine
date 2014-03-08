@@ -22,4 +22,10 @@ public class EditorDaoPostGres implements EditorDao {
 		return null;
 	}
 
+	@Override
+	public boolean validateEditor( String username, String password ) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

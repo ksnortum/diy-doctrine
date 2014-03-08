@@ -10,13 +10,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import net.snortum.doctrine.model.Editor;
 import net.snortum.doctrine.model.PropFile;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,11 +27,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class EditorDaoJava implements EditorDao {
 
-	private final static Logger LOG = Logger.getLogger(EditorDaoJava.class);
+	private final static Logger LOG = Logger.getLogger( EditorDaoJava.class );
 	private final static String EDITORS_FILE_NAME = "editors.ser";
-
-	@Autowired
-	private ServletContext context;
 
 	private PropFile propFile = PropFile.getInstance();
 
@@ -46,9 +40,9 @@ public class EditorDaoJava implements EditorDao {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings( "unchecked" )
 	@Override
-	public synchronized void saveEditor(Editor editor) throws IOException,
+	public synchronized void saveEditor( Editor editor ) throws IOException,
 			ClassNotFoundException {
 
 		List<Editor> editors = new ArrayList<Editor>();
@@ -56,34 +50,40 @@ public class EditorDaoJava implements EditorDao {
 
 		// Get current list of editors from disk, if present
 		do {
-			try (FileInputStream fis = new FileInputStream(getFileName())) {
+			try (FileInputStream fis = new FileInputStream( getFileName() )) {
 				tryAgain = false;
 
-				try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+				try (ObjectInputStream ois = new ObjectInputStream( fis )) {
 					editors = (List<Editor>) ois.readObject();
-				} catch (EOFException eofe) {
-					// This is okay the first time because nothing will be in the file
 				}
-			} catch (FileNotFoundException fnfe) {
-				if (LOG.isInfoEnabled()) {
-					LOG.info("Creating a new editors file");
+				catch ( EOFException eofe ) {
+					// This is okay the first time because nothing will be in
+					// the file
+				}
+			}
+			catch ( FileNotFoundException fnfe ) {
+				if ( LOG.isInfoEnabled() ) {
+					LOG.info( "Creating a new editors file" );
 				}
 
-				try (FileOutputStream fos = new FileOutputStream(getFileName())) {
-				} catch (IOException ioe) {
-					LOG.error("Could not create \"" + getFileName()
-							+ "\" for the first time", ioe);
+				try (FileOutputStream fos =
+						new FileOutputStream( getFileName() )) {
+				}
+				catch ( IOException ioe ) {
+					LOG.error( "Could not create \"" + getFileName()
+							+ "\" for the first time", ioe );
 					return;
 				}
 			}
-		} while (tryAgain);
+		}
+		while ( tryAgain );
 
-		editors.add(editor);
+		editors.add( editor );
 
 		// Write updated list of editors back to disk
-		try (FileOutputStream fos = new FileOutputStream(getFileName())) {
-			try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-				oos.writeObject(editors);
+		try (FileOutputStream fos = new FileOutputStream( getFileName() )) {
+			try (ObjectOutputStream oos = new ObjectOutputStream( fos )) {
+				oos.writeObject( editors );
 			}
 		}
 	}
@@ -97,23 +97,23 @@ public class EditorDaoJava implements EditorDao {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings( "unchecked" )
 	@Override
-	public Editor getEditor(String username) throws IOException,
+	public Editor getEditor( String username ) throws IOException,
 			ClassNotFoundException {
 
 		List<Editor> editors = new ArrayList<Editor>();
 
 		// Get current list of editors from disk, if present
-		try (FileInputStream fis = new FileInputStream(getFileName())) {
-			try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+		try (FileInputStream fis = new FileInputStream( getFileName() )) {
+			try (ObjectInputStream ois = new ObjectInputStream( fis )) {
 				editors = (List<Editor>) ois.readObject();
 			}
 		}
 
 		Editor editor = null;
-		for (Editor thisEditor : editors) {
-			if (thisEditor.getUsername().equalsIgnoreCase(username)) {
+		for ( Editor thisEditor : editors ) {
+			if ( thisEditor.getUsername().equalsIgnoreCase( username ) ) {
 				editor = thisEditor;
 				break;
 			}
@@ -127,19 +127,6 @@ public class EditorDaoJava implements EditorDao {
 		return getPropFile().getDatabaseDir() + EDITORS_FILE_NAME;
 	}
 
-	/** @return the servlet context */
-	public ServletContext getContext() {
-		return context;
-	}
-
-	/**
-	 * @param context
-	 *            the context to set, mostly for testing
-	 */
-	public void setContext(ServletContext context) {
-		this.context = context;
-	}
-
 	/** @return the propFile object */
 	public PropFile getPropFile() {
 		return propFile;
@@ -149,7 +136,13 @@ public class EditorDaoJava implements EditorDao {
 	 * @param propFile
 	 *            the propFile to set, mostly for testing
 	 */
-	public void setPropFile(PropFile propFile) {
+	public void setPropFile( PropFile propFile ) {
 		this.propFile = propFile;
+	}
+
+	@Override
+	public boolean validateEditor( String username, String password ) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
