@@ -47,7 +47,7 @@ public class LoginController {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	@RequestMapping( value = "update", method = RequestMethod.POST )
+	@RequestMapping( value = "first_time", method = RequestMethod.POST )
 	public String validateEditor( @Valid String username,
 			@Valid String password,
 			BindingResult bindingResult ) throws IOException,
@@ -67,10 +67,11 @@ public class LoginController {
 		if ( getEditorDao().validateEditor( username, password ) ) {
 			editor = getEditorDao().getEditor( username );
 		}
-		
+
 		if ( editor.editorCanAdd() ) {
 			return "add/menu"; // TODO: what is this URL
-		} else {
+		}
+		else {
 			return "display/menu"; // TODO: where do we go? Display?
 		}
 	}
@@ -82,7 +83,7 @@ public class LoginController {
 	 *            add a new editor to this
 	 * @return string to next page
 	 */
-	@RequestMapping( value = "first_time" )
+	@RequestMapping( value = "first_time", method = RequestMethod.GET )
 	public String displayForm( Model model ) {
 		if ( LOG.isInfoEnabled() ) {
 			LOG.info( "In displayForm()" );
