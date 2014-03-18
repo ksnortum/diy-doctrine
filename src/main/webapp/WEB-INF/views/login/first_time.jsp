@@ -20,15 +20,18 @@
 		<table>
 			<tr>
 				<th><label for="username">Username</label></th>
-				<td><sf:input path="username" size="30" id="username"/></td>
+				<td><sf:input path="username" size="20" maxlength="20" 
+					id="username"/></td>
+				<td><small>No spaces, please</small></td>
+				<sf:errors path="username" cssClass="errors" />
 			</tr>
 			
 			<tr>
 				<th><label for="user_password">Password</label></th>
-				<td><sf:password path="password" size="30"
-				                 showPassword="false"
-				                 id="user_password"/>
-			</td>
+				<td><sf:password path="password" size="20" maxlength="20"
+				                 showPassword="false" id="user_password"/>
+				<td><small>Be Tricky</small></td>
+				<sf:errors path="password" cssClass="errors" />
 			</tr>
 		</table>
 	</fieldset>

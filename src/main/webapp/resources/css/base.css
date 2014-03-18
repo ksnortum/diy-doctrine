@@ -42,14 +42,18 @@ li {
 }
 
 input[type="submit"] {
-	border: none;
-	margin: 5;
+	margin: 15;
 	padding: 15;
 	background-color: lightBlue; 
+	font-weight: bold;
 }
 
 .center {
 	margin-left: auto;
 	margin-right: auto;
 	width: 70%;
+}
+
+.errors {
+	color: red;
 }
