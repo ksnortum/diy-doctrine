@@ -3,6 +3,9 @@ package net.snortum.doctrine.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Entity;
 
@@ -23,11 +26,25 @@ public class Editor implements Serializable {
 	 */
 	private static final long serialVersionUID = 5450662604532514701L;
 
+	@Size( min = 3, max = 20, message = "Username must be between 3 and 30 "
+			+ "characters" )
+	@Pattern( regexp = "^\\w{3,20}$", message = "Username must be alphanumeric"
+			+ " (underscore okay) with no spaces" )
+	@NotNull( message = "You must enter a username" )
 	private String username;
+
+	@Size( min = 8, max = 20, message = "Password must be between 8 and 20 "
+			+ "characters" )
+	@NotNull( message = "You must enter a password" )
 	private String password;
+
 	private String firstName;
 	private String lastName;
+
+	@Pattern( regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
+			message = "Invalid email address." )
 	private String email;
+
 	private boolean canAdd;
 	private boolean canDelete;
 	private boolean deleteApproval;
@@ -42,7 +59,7 @@ public class Editor implements Serializable {
 	/**
 	 * @return the username
 	 */
-	@Column( name = "username", unique = true, nullable = false, length = 20 )
+	@Column( name = "username", unique = true )
 	public String getUsername() {
 		return username;
 	}
