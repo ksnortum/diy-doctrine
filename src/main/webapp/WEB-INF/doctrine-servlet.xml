@@ -21,6 +21,10 @@
 	<!-- Use annotations for MVC -->
 	<mvc:annotation-driven />
 	
+	<!-- Bean validator implementation -->
+	<bean id="validator"
+      class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+	
 	<!-- Where to find resources, like CSS files -->
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
 	

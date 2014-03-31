@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
 	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -33,11 +34,13 @@
 				<td><small>Be Tricky</small></td>
 				<sf:errors path="password" cssClass="errors" />
 			</tr>
+			
+			<tr>
+				<td><input type="submit" value="Submit" /></td>
+			</tr>
 		</table>
 	</fieldset>
 </sf:form>
-
-<input type="submit" value="Submit" />
 
 </body>
 </html>

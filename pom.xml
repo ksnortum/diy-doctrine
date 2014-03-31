@@ -16,7 +16,7 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<springVersion>3.2.6.RELEASE</springVersion>
+		<springVersion>3.2.8.RELEASE</springVersion>
 		<log4jVersion>1.2.15</log4jVersion>
 		<tilesVersion>3.0.3</tilesVersion>
 	</properties>

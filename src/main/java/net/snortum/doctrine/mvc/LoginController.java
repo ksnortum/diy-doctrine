@@ -9,9 +9,11 @@ import net.snortum.doctrine.dao.EditorDaoFactory;
 import net.snortum.doctrine.model.Editor;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,6 +30,9 @@ public class LoginController {
 	private static final Logger LOG = Logger.getLogger( LoginController.class );
 
 	private EditorDao editorDao;
+	
+	@Autowired
+	private Validator validator;
 
 	/**
 	 * Create an LoginController object. Set {@link EditorDao} from factory.
@@ -48,8 +53,7 @@ public class LoginController {
 	 * @throws IOException
 	 */
 	@RequestMapping( value = "first_time", method = RequestMethod.POST )
-	public String validateEditor( @Valid String username,
-			@Valid String password,
+	public String validateEditor( @Model( Editor editor ),
 			BindingResult bindingResult ) throws IOException,
 			ClassNotFoundException {
 
