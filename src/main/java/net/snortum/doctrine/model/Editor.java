@@ -26,16 +26,16 @@ public class Editor implements Serializable {
 	 */
 	private static final long serialVersionUID = 5450662604532514701L;
 
+	@NotNull( message = "You must enter a username" )
 	@Size( min = 3, max = 20, message = "Username must be between 3 and 30 "
 			+ "characters" )
 	@Pattern( regexp = "^\\w{3,20}$", message = "Username must be alphanumeric"
 			+ " (underscore okay) with no spaces" )
-	@NotNull( message = "You must enter a username" )
 	private String username;
 
+	@NotNull( message = "You must enter a password" )
 	@Size( min = 8, max = 20, message = "Password must be between 8 and 20 "
 			+ "characters" )
-	@NotNull( message = "You must enter a password" )
 	private String password;
 
 	private String firstName;

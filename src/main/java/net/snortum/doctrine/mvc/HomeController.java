@@ -29,6 +29,6 @@ public class HomeController {
 			LOG.info( "In showHomePage()" );
 		}
 
-		return "home";
+		return "main";
 	}
 }

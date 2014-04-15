@@ -19,6 +19,7 @@
 		<springVersion>3.2.8.RELEASE</springVersion>
 		<log4jVersion>1.2.15</log4jVersion>
 		<tilesVersion>3.0.3</tilesVersion>
+		<thymeleafVersion>2.1.2.RELEASE</thymeleafVersion>
 	</properties>
 
 	<build>
@@ -68,20 +69,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${springVersion}</version>
-		</dependency>
-		
-		<!-- Form tags in JSP -->
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		
-		<!-- JSTL (JSP tag core "c") -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
 		 
 		<!-- @Inject (used?)-->
@@ -183,5 +170,12 @@
 			<version>${tilesVersion}</version>
 		</dependency>
 		
+		<!-- Thymeleaf, JSP replacement -->
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring3</artifactId>
+			<version>${thymeleafVersion}</version>
+		</dependency>
+            		
 	</dependencies>
 </project>

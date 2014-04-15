@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Controller that logs in a valid editor
  * 
  * @author Knute Snortum
- * @version 0.1
+ * @version 0.2
  */
 
 @Controller
@@ -44,16 +45,14 @@ public class LoginController {
 	/**
 	 * Validate a user ({@link Editor})
 	 * 
-	 * @param username
-	 *            the editor's username
-	 * @param password
-	 *            the editor's password
+	 * @param editor
+	 *            the editor entity
 	 * @return string to the next page
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	@RequestMapping( value = "first_time", method = RequestMethod.POST )
-	public String validateEditor( @Model( Editor editor ),
+	@RequestMapping( value = "frame", method = RequestMethod.POST )
+	public String validateEditor( @Valid Editor editor,
 			BindingResult bindingResult ) throws IOException,
 			ClassNotFoundException {
 
@@ -63,20 +62,18 @@ public class LoginController {
 
 		// Form did not validate
 		if ( bindingResult.hasErrors() ) {
-			return "login/first_time";
+			return "login/frame";
 		}
 
-		Editor editor = new Editor();
-
-		if ( getEditorDao().validateEditor( username, password ) ) {
-			editor = getEditorDao().getEditor( username );
+		if ( getEditorDao().validateEditor( editor.getUsername(), 
+				editor.getPassword() ) ) {
+			editor = getEditorDao().getEditor( editor.getUsername() );
 		}
 
 		if ( editor.editorCanAdd() ) {
 			return "add/menu"; // TODO: what is this URL
-		}
-		else {
-			return "display/menu"; // TODO: where do we go? Display?
+		} else {
+			return "login/success"; 
 		}
 	}
 
@@ -87,13 +84,13 @@ public class LoginController {
 	 *            add a new editor to this
 	 * @return string to next page
 	 */
-	@RequestMapping( value = "first_time", method = RequestMethod.GET )
+	@RequestMapping( value = "frame", method = RequestMethod.GET )
 	public String displayForm( Model model ) {
 		if ( LOG.isInfoEnabled() ) {
 			LOG.info( "In displayForm()" );
 		}
 		model.addAttribute( new Editor() );
-		return "login/first_time";
+		return "login/frame";
 	}
 
 	/**

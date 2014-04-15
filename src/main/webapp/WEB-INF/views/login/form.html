@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="form">
+		<h2>Login to DIY Doctrine</h2>
+		
+		<form method="POST" th:object="${editor}" >
+			<fieldset>
+				<table>
+					<tr>
+						<th><label for="username">User Name</label></th>
+						<td>
+							<input type="text" size="30" maxlength="30" 
+								th:field="*{username}" />
+						</td>
+						<td th:if="${#fields.hasErrors('username')}" 
+						    th:errors="*{username}"
+						    th:class="${#fields.hasErrors('username')}? fieldError">
+						    User name errors go here
+						</td>
+					</tr>
+					
+					<tr>
+						<th><label for="password">Password</label></th>
+						<td>
+							<input type="password" size="20" maxlength="20"
+								th:field="*{password}" />
+						</td>
+						<td th:if="${#fields.hasErrors('password')}" 
+						    th:errors="*{password}"
+						    th:class="${#fields.hasErrors('password')}? fieldError">
+							Password errors go here
+						</td>
+					</tr>
+					
+					<tr>
+						<td><input type="submit" value="Submit" /></td>
+					</tr>
+				</table>
+			</fieldset>
+		</form>
+	</div>
+</body>
+</html>

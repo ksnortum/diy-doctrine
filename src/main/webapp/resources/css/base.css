@@ -55,6 +55,8 @@ input[type="submit"] {
 	width: 70%;
 }
 
-.errors {
+.fieldError {
 	color: red;
+	font-size: small;
+	font-weight: bold;
 }
