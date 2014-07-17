@@ -1,0 +1,26 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/resources/css/base.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/resources/css/menu.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/resources/css/header.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/resources/css/footer.css}" />
+	
+	<title>DIY Doctrine</title>
+</head>
+
+<body class="center">
+	<div th:replace="header::header"></div>
+	<div th:replace="menu::menu"></div>
+	<div id="body">
+		<h2>Adding Menu Goes Here</h2>
+	</div>
+	<div th:replace="footer::footer"></div>
+</body>
+
+</html>
