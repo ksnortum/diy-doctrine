@@ -3,18 +3,18 @@ package net.snortum.doctrine.mvc;
 import java.io.IOException;
 
 import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import net.snortum.doctrine.dao.EditorDao;
-import net.snortum.doctrine.dao.EditorDaoFactory;
 import net.snortum.doctrine.model.Editor;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Controller that logs in a valid editor
  * 
  * @author Knute Snortum
- * @version 0.2
+ * @version 0.3
  */
 
 @Controller
@@ -30,16 +30,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 	private static final Logger LOG = Logger.getLogger( LoginController.class );
 
+	@Autowired
 	private EditorDao editorDao;
 	
 	@Autowired
 	private Validator validator;
-
-	/**
-	 * Create an LoginController object. Set {@link EditorDao} from factory.
-	 */
+	
 	public LoginController() {
-		editorDao = EditorDaoFactory.getEditorDao();
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		validator = factory.getValidator();
 	}
 
 	/**
@@ -53,8 +52,7 @@ public class LoginController {
 	 */
 	@RequestMapping( value = "frame", method = RequestMethod.POST )
 	public String validateEditor( @Valid Editor editor,
-			BindingResult bindingResult ) throws IOException,
-			ClassNotFoundException {
+			BindingResult bindingResult ) {
 
 		if ( LOG.isInfoEnabled() ) {
 			LOG.info( "In validateEditor()" );
@@ -65,9 +63,12 @@ public class LoginController {
 			return "login/frame";
 		}
 
-		if ( getEditorDao().validateEditor( editor.getUsername(), 
-				editor.getPassword() ) ) {
-			editor = getEditorDao().getEditor( editor.getUsername() );
+		int editorId = getEditorDao().idByUsername( editor.getUsername() );
+		
+		if ( editorId != -1) {
+			editor = getEditorDao().read( editorId );
+		} else {
+			return "login/not_found";
 		}
 
 		if ( editor.editorCanAdd() ) {

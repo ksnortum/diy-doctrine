@@ -1,38 +1,55 @@
 package net.snortum.doctrine.dao;
 
-import java.io.IOException;
+import java.util.List;
 
 import net.snortum.doctrine.model.Editor;
+import net.snortum.doctrine.util.HibernateUtil;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 
 /**
- * All the persistence activity for an {@link Editor}.
+ * Data Access Object for {@link Editor}. Inherits basic CRUD.
  * 
- * @author Knute
- * @version 0.1
+ * @author Knute Snortum
+ * @version 0.2
+ *
  */
-public interface EditorDao {
-
-	/**
-	 * Add this {@link Editor} object to a list of editors and save.
-	 * 
-	 * @param editor
-	 *            the editor to save
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	void saveEditor( Editor editor ) throws IOException, ClassNotFoundException;
-
-	/**
-	 * Send in a username and return an {@link Editor}.
-	 * 
-	 * @param username
-	 *            the username of the editor
-	 * @return The matching editor or null if not found
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	Editor getEditor( String username ) throws IOException,
-			ClassNotFoundException;
+@Component
+public class EditorDao extends GenericHibernateDao<Editor, Integer> {
 	
-	boolean validateEditor( String username, String password );
+	/** Tell GenericHibernateDao that the class is Editor */
+	public EditorDao() {
+		super( Editor.class );
+	}
+
+	/** @return a list of all Editors */
+	public List<Editor> list() {
+		Session session = HibernateUtil.sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		@SuppressWarnings( "unchecked" )
+		List<Editor> editors = session.createCriteria( Editor.class ).list();
+		session.getTransaction().commit();
+
+		return editors;
+	}
+	
+	/**
+	 * Get editor ID by username
+	 * 
+	 * @param username the username to find
+	 * @return ID of the user, or -1 if nut found
+	 */
+	public int idByUsername( String username ) {
+		Session session = HibernateUtil.sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		Criteria criteria = session.createCriteria( Editor.class );
+		Editor found = (Editor) criteria
+				.add( Restrictions.eq( "username", username) ).uniqueResult();
+		session.getTransaction().commit();
+		
+		return found == null ? -1 : found.getId(); 
+	}
 }

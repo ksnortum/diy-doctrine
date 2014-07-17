@@ -16,7 +16,7 @@
 		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 	
 	<!-- Look for Spring components here -->
-	<context:component-scan base-package="net.snortum.doctrine.mvc" />
+	<context:component-scan base-package="net.snortum.doctrine" />
 	
 	<!-- Use annotations for MVC -->
 	<mvc:annotation-driven />
@@ -28,6 +28,7 @@
 	<!-- Where to find resources, like CSS files -->
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
 	
+	<!-- ThymeLeaf is a JSP replacement  -->
 	<bean id="templateResolver"
         class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
     <property name="prefix" value="/WEB-INF/views/" />
@@ -44,6 +45,6 @@
 	 
 	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
-	</bean>   
+	</bean>
 
 </beans>

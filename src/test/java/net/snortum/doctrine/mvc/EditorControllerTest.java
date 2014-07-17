@@ -18,7 +18,7 @@ import org.springframework.validation.BindingResult;
  * Tests for {@link EditorController}
  * 
  * @author Knute Snortum
- * @version 0.1
+ * @version 0.2
  */
 public class EditorControllerTest {
 	private EditorController ec;
@@ -33,15 +33,14 @@ public class EditorControllerTest {
 	 * @throws ClassNotFoundException
 	 */
 	@Test
-	public void testAddEditorFromFormNoErrors() throws ClassNotFoundException,
-			IOException {
+	public void testAddEditorFromFormNoErrors() {
 
 		setupVariables();
 		Editor editor = new Editor();
 		BindingResultForTest bindingResult = new BindingResultForTest();
 		bindingResult.setErrors( false );
 		String menu = ec.addEditorFromForm( editor, bindingResult );
-		verify( editorDaoMock ).saveEditor( editor );
+		verify( editorDaoMock ).update( editor );
 		assertTrue( "home".equalsIgnoreCase( menu ) );
 	}
 

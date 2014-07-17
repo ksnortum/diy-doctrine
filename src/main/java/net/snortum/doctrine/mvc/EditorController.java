@@ -5,10 +5,10 @@ import java.io.IOException;
 import javax.validation.Valid;
 
 import net.snortum.doctrine.dao.EditorDao;
-import net.snortum.doctrine.dao.EditorDaoFactory;
 import net.snortum.doctrine.model.Editor;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,14 +26,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class EditorController {
 	private final static Logger LOG = Logger.getLogger(EditorController.class);
 
+	@Autowired
 	private EditorDao editorDao;
-
-	/**
-	 * Create an EditorController object. Set {@link EditorDao} from factory.
-	 */
-	public EditorController() {
-		editorDao = EditorDaoFactory.getEditorDao();
-	}
 
 	/**
 	 * Save an {@link Editor}
@@ -48,8 +42,7 @@ public class EditorController {
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String addEditorFromForm(@Valid Editor editor,
-			BindingResult bindingResult) throws ClassNotFoundException,
-			IOException {
+			BindingResult bindingResult) {
 
 		if (LOG.isInfoEnabled()) {
 			LOG.info("In addEditorFromForm()");
@@ -60,7 +53,7 @@ public class EditorController {
 			return "register/first_time";
 		}
 
-		getEditorDao().saveEditor(editor);
+		getEditorDao().update( editor );
 
 		// New editor still needs to login
 		return "home";

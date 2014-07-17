@@ -3,11 +3,15 @@ package net.snortum.doctrine.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * Model of a person who edits (sets up) doctrines and Bible verses.
@@ -17,6 +21,8 @@ import org.hibernate.annotations.Entity;
  */
 
 @Entity
+@DynamicUpdate
+@Table( name = "editors" )
 public class Editor implements Serializable {
 
 	/**
@@ -26,25 +32,14 @@ public class Editor implements Serializable {
 	 */
 	private static final long serialVersionUID = 5450662604532514701L;
 
-	@NotNull( message = "You must enter a username" )
-	@Size( min = 3, max = 20, message = "Username must be between 3 and 30 "
-			+ "characters" )
-	@Pattern( regexp = "^\\w{3,20}$", message = "Username must be alphanumeric"
-			+ " (underscore okay) with no spaces" )
+	@Id
+	@GeneratedValue
+	private int id;
 	private String username;
-
-	@NotNull( message = "You must enter a password" )
-	@Size( min = 8, max = 20, message = "Password must be between 8 and 20 "
-			+ "characters" )
 	private String password;
-
 	private String firstName;
 	private String lastName;
-
-	@Pattern( regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
-			message = "Invalid email address." )
 	private String email;
-
 	private boolean canAdd;
 	private boolean canDelete;
 	private boolean deleteApproval;
@@ -57,9 +52,32 @@ public class Editor implements Serializable {
 	}
 
 	/**
+	 * @return the id
+	 */
+	@Column( name = "id", unique = true )
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	@SuppressWarnings( "unused" ) // Hibernate can access private setters
+	private void setId( int id ) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the username
 	 */
-	@Column( name = "username", unique = true )
+	@Column( name = "username", unique = true, length = 20 )
+	@NotNull( message = "You must enter a username" )
+	@Size( min = 3, max = 20,
+			message = "Username must be between 3 and 30 characters" )
+	@Pattern(
+			regexp = "^\\w{3,20}$",
+			message = "Username must be alphanumeric (underscore okay) with no spaces" )
 	public String getUsername() {
 		return username;
 	}
@@ -76,6 +94,11 @@ public class Editor implements Serializable {
 	 * @return the password
 	 */
 	@Column( name = "password", nullable = false, length = 20 )
+	@NotNull( message = "You must enter a password" )
+	@Size( min = 8, max = 20, message = "Password must be between 8 and 20 "
+			+ "characters" )
+	@Pattern( regexp = ".*[A-Z].*",
+			message = "Password must contain at least one capital letter" )
 	public String getPassword() {
 		return password;
 	}
@@ -91,7 +114,7 @@ public class Editor implements Serializable {
 	/**
 	 * @return the firstName
 	 */
-	@Column( name = "first_name", nullable = false, length = 20 )
+	@Column( name = "first_name", length = 20 )
 	public String getFirstName() {
 		return firstName;
 	}
@@ -107,7 +130,7 @@ public class Editor implements Serializable {
 	/**
 	 * @return the lastName
 	 */
-	@Column( name = "last_name", nullable = false, length = 40 )
+	@Column( name = "last_name", length = 40 )
 	public String getLastName() {
 		return lastName;
 	}
@@ -124,6 +147,8 @@ public class Editor implements Serializable {
 	 * @return the email address
 	 */
 	@Column( name = "email", length = 40 )
+	@Pattern( regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
+			message = "Invalid email address." )
 	public String getEmail() {
 		return this.email;
 	}
