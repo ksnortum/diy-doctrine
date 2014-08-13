@@ -1,0 +1,94 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="form">
+		<h2>Register at DIY Doctrine</h2>
+		
+		<form method="POST" th:object="${editor}" >
+			<fieldset>
+				<table>
+					<tr>
+						<th><label for="firstName">First Name</label></th>
+						<td>
+							<input type="text" size="20" maxlength="20"
+								th:field="*{firstName}" />
+						</td>
+						<td th:if="${#fields.hasErrors('firstName')}" 
+						    th:errors="*{firstName}"
+						    th:class="${#fields.hasErrors('firstName')}? fieldError">
+						    First name errors go here
+						</td>
+					</tr>
+					
+					<tr>
+						<th><label for="lastName">Last Name</label></th>
+						<td>
+							<input type="text" size="40" maxlength="40"
+								th:field="*{lastName}" />
+						</td>
+						<td th:if="${#fields.hasErrors('lastName')}" 
+						    th:errors="lastName"
+						    th:class="${#fields.hasErrors('lastName')}? fieldError">
+						    Last name errors go here
+						</td>
+					</tr>
+					
+					<tr>
+						<th><label for="username">User Name</label></th>
+						<td>
+							<input type="text" size="30" maxlength="30" 
+								th:field="*{username}" />
+						</td>
+						<td th:if="${#fields.hasErrors('username')}" 
+						    th:errors="*{username}"
+						    th:class="${#fields.hasErrors('username')}? fieldError">
+						    User name errors go here
+						</td>
+					</tr>
+					
+					<tr>
+						<th><label for="password">Password</label></th>
+						<td>
+							<input type="password" size="20" maxlength="20"
+								th:field="*{password}" />
+						</td>
+						<td th:if="${#fields.hasErrors('password')}" 
+						    th:errors="*{password}"
+						    th:class="${#fields.hasErrors('password')}? fieldError">
+							Password errors go here
+						</td>
+					</tr>
+					
+					<tr>
+						<th><label for="email">Email</label></th>
+						<td>
+							<input type="email" size="40" maxlength="40"
+								th:field="*{email}" 
+							/>
+							<!-- th:pattern="${^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/}" -->
+						</td>
+						<td th:if="${#fields.hasErrors('email')}" 
+						    th:errors="*{email}"
+						    th:class="${#fields.hasErrors('email')}? fieldError">
+							Email errors go here
+						</td>
+					</tr>
+					
+					<tr>
+						<td><input type="submit" value="Submit" /></td>
+					</tr>
+				</table>
+			</fieldset>
+			
+			<div th:if="${#fields.hasGlobalErrors()}">
+  				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">
+  					Global errors go here
+  				</p>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,11 +1,6 @@
 package net.snortum.doctrine.mvc;
 
-import java.io.IOException;
-
 import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import net.snortum.doctrine.dao.EditorDao;
 import net.snortum.doctrine.model.Editor;
@@ -13,7 +8,7 @@ import net.snortum.doctrine.model.Editor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Controller that logs in a valid editor
  * 
  * @author Knute Snortum
- * @version 0.3
+ * @version 0.4
  */
 
 @Controller
@@ -32,27 +27,21 @@ public class LoginController {
 
 	@Autowired
 	private EditorDao editorDao;
-	
-	@Autowired
-	private Validator validator;
-	
-	public LoginController() {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		validator = factory.getValidator();
-	}
 
 	/**
 	 * Validate a user ({@link Editor})
 	 * 
 	 * @param editor
 	 *            the editor entity
+	 * @param bindingResult
+	 *            used to check for validation errors
+	 * @param model
+	 *            ModelMap used to hold logged in editor
 	 * @return string to the next page
-	 * @throws ClassNotFoundException
-	 * @throws IOException
 	 */
 	@RequestMapping( value = "frame", method = RequestMethod.POST )
 	public String validateEditor( @Valid Editor editor,
-			BindingResult bindingResult ) {
+			BindingResult bindingResult, ModelMap model ) {
 
 		if ( LOG.isInfoEnabled() ) {
 			LOG.info( "In validateEditor()" );
@@ -64,33 +53,42 @@ public class LoginController {
 		}
 
 		int editorId = getEditorDao().idByUsername( editor.getUsername() );
-		
-		if ( editorId != -1) {
+
+		if ( editorId != -1 ) {
 			editor = getEditorDao().read( editorId );
-		} else {
+			
+			if ( editor == null ) {
+				LOG.error( "Found editor id (" + editorId + 
+						") but cannot read editor from DB" );
+				return "login/not_found";
+			}
+		}
+		else {
 			return "login/not_found";
 		}
-
+		
+		model.addAttribute( "editor", editor );
+		
 		if ( editor.editorCanAdd() ) {
 			return "add/menu"; // TODO: what is this URL
-		} else {
-			return "login/success"; 
 		}
+
+		return "login/success";
 	}
 
 	/**
-	 * Display an empty form for new {@link Editor}
+	 * Display an empty form to login
 	 * 
 	 * @param model
 	 *            add a new editor to this
 	 * @return string to next page
 	 */
 	@RequestMapping( value = "frame", method = RequestMethod.GET )
-	public String displayForm( Model model ) {
+	public String displayForm( ModelMap model ) {
 		if ( LOG.isInfoEnabled() ) {
 			LOG.info( "In displayForm()" );
 		}
-		model.addAttribute( new Editor() );
+		model.addAttribute( "editor", new Editor() );
 		return "login/frame";
 	}
 

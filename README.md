@@ -1,5 +1,6 @@
-DIY Doctrine Connect Bible Verses and Ideas
+DIY Doctrine 
 =
+_Connect Bible Verses and Ideas_
 
 **Note:** This project is process.  At some point it will be a way for people to connect a Bible verse with an idea or doctrine through a web interface.  Right now it might be used as an MVC/Spring/Hibernate template.
 
