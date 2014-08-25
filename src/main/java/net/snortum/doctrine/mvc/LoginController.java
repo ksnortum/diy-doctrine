@@ -49,13 +49,16 @@ public class LoginController {
 
 		// Form did not validate
 		if ( bindingResult.hasErrors() ) {
+			if ( LOG.isInfoEnabled() ) {
+				LOG.info( "Login form did not validate" );
+			}
 			return "login/frame";
 		}
 
-		int editorId = getEditorDao().idByUsername( editor.getUsername() );
+		int editorId = editorDao.idByUsername( editor.getUsername() );
 
 		if ( editorId != -1 ) {
-			editor = getEditorDao().read( editorId );
+			editor = editorDao.read( editorId );
 			
 			if ( editor == null ) {
 				LOG.error( "Found editor id (" + editorId + 

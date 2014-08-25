@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -55,6 +56,7 @@ public class Editor implements Serializable {
 	 * @return the id
 	 */
 	@Column( name = "id", unique = true )
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -209,4 +211,8 @@ public class Editor implements Serializable {
 		this.deleteApproval = deleteApproval;
 	}
 
+	@Override
+	public String toString() {
+		return getFirstName() + " " + getLastName();
+	}
 }
