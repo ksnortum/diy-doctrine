@@ -10,15 +10,15 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/resources/css/menu.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/resources/css/header.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/resources/css/footer.css}" />
-	      
+	
 	<title>DIY Doctrine</title>
 </head>
 
 <body class="center">
 	<div th:replace="header::header"></div>
-	<div th:replace="menu::menu"></div>
+	<div th:replace="menu::menu_init"></div>
 	<div id="body">
-		<div th:replace="init::first_time"></div>
+		<h2>You are logged off.</h2>
 	</div>
 	<div th:replace="footer::footer"></div>
 </body>

@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import net.snortum.doctrine.dao.EditorDao;
 import net.snortum.doctrine.model.Editor;
+import net.snortum.doctrine.model.SessionInfo;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Controller that logs in a valid editor
  * 
  * @author Knute Snortum
- * @version 0.4
+ * @version 0.5
  */
 
 @Controller
@@ -27,6 +28,9 @@ public class LoginController {
 
 	@Autowired
 	private EditorDao editorDao;
+	
+	@Autowired
+	private SessionInfo sessionInfo;
 
 	/**
 	 * Validate a user ({@link Editor})
@@ -70,10 +74,15 @@ public class LoginController {
 			return "login/not_found";
 		}
 		
+		if ( LOG.isInfoEnabled() ) {
+			LOG.info( "Updating Model and SessionInfo" );
+		}
+		
 		model.addAttribute( "editor", editor );
+		sessionInfo.setEditor( editor );
 		
 		if ( editor.editorCanAdd() ) {
-			return "add/menu"; // TODO: what is this URL
+			return "menu"; // 
 		}
 
 		return "login/success";

@@ -6,7 +6,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
- * Get a static Session Factory from the Hibernate configuration
+ * Get a static SessionInfo Factory from the Hibernate configuration
  * 
  * @author Knute
  * @version 0.3
