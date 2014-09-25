@@ -4,7 +4,8 @@ import javax.validation.Valid;
 
 import net.snortum.doctrine.dao.EditorDao;
 import net.snortum.doctrine.model.Editor;
-import net.snortum.doctrine.model.SessionInfo;
+import net.snortum.doctrine.util.SessionInfo;
+import net.snortum.doctrine.util.VersionsBean;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Controller that logs in a valid editor
  * 
  * @author Knute Snortum
- * @version 0.5
+ * @version 0.6
  */
 
 @Controller
@@ -28,9 +29,12 @@ public class LoginController {
 
 	@Autowired
 	private EditorDao editorDao;
-	
+
 	@Autowired
 	private SessionInfo sessionInfo;
+
+	@Autowired
+	private VersionsBean versions;
 
 	/**
 	 * Validate a user ({@link Editor})
@@ -63,9 +67,9 @@ public class LoginController {
 
 		if ( editorId != -1 ) {
 			editor = editorDao.read( editorId );
-			
+
 			if ( editor == null ) {
-				LOG.error( "Found editor id (" + editorId + 
+				LOG.error( "Found editor id (" + editorId +
 						") but cannot read editor from DB" );
 				return "login/not_found";
 			}
@@ -73,16 +77,18 @@ public class LoginController {
 		else {
 			return "login/not_found";
 		}
-		
+
 		if ( LOG.isInfoEnabled() ) {
 			LOG.info( "Updating Model and SessionInfo" );
 		}
-		
+
 		model.addAttribute( "editor", editor );
 		sessionInfo.setEditor( editor );
-		
+		//List<Version> versionList = versions.getVersions();
+		//sessionInfo.setVersions( versionList );
+
 		if ( editor.editorCanAdd() ) {
-			return "menu"; // 
+			return "menu"; //
 		}
 
 		return "login/success";
@@ -117,5 +123,25 @@ public class LoginController {
 	 */
 	public void setEditorDao( EditorDao editorDao ) {
 		this.editorDao = editorDao;
+	}
+
+	/**
+	 * For testing only.
+	 * 
+	 * @param sessionInfo
+	 *            the sessionInfo to set
+	 */
+	public void setSessionInfo( SessionInfo sessionInfo ) {
+		this.sessionInfo = sessionInfo;
+	}
+
+	/**
+	 * For testing only
+	 * 
+	 * @param versions
+	 *            the versions bean to set
+	 */
+	public void setVersions( VersionsBean versions ) {
+		this.versions = versions;
 	}
 }

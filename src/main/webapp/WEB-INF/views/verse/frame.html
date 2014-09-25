@@ -16,9 +16,9 @@
 
 <body class="center">
 	<div th:replace="header::header"></div>
-	<div th:replace="menu::menu_init"></div>
+	<div th:replace="menu_home::menu"></div>
 	<div id="body">
-		<div th:replace="init::logged_in"></div>
+		<div th:replace="verse/form::form"></div>
 	</div>
 	<div th:replace="footer::footer"></div>
 </body>

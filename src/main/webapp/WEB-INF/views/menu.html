@@ -3,13 +3,25 @@
       xmlns:th="http://www.thymeleaf.org">
 
 	<body>
-		<div th:fragment="menu" id="menu">
+		<div th:fragment="menu" class="menu">
 			<ul>
 				<li><a th:href="@{/}"              >Home</a></li>
-				<li><a th:href="@{/logoff/success}">Logoff</a></li>
+				<li><a th:href="@{/logoff/}"       >Logoff</a></li>
 				<li><a th:href="@{/add/verse}"     >Add a Verse</a></li>
 				<li><a th:href="@{/add/doctrine}"  >Add a Doctrine</a></li>
 				<li><a th:href="@{/add/connect}"   >Connect a Verse</a></li>
+			</ul>	
+		</div>
+		<div th:fragment="menu_init" class="menu">
+			<ul>
+				<li><a th:href="@{/}"              >Home</a></li>
+				<li><a th:href="@{/login/frame}"   >Login</a></li>
+				<li><a th:href="@{/register/frame}">Register</a></li>
+			</ul>	
+		</div>
+		<div th:fragment="menu_home" class="menu">
+			<ul>
+				<li><a th:href="@{/}">Home</a></li>
 			</ul>	
 		</div>
 	</body>

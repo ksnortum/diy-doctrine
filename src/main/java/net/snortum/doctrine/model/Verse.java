@@ -11,9 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -61,8 +59,13 @@ public class Verse {
 		this.id = id;
 	}
 	
+	/**
+	 * Get the text of this verse(s).  Pull in the text for faster lookups.  
+	 * If null, get text from Bibles.org 
+	 * 
+	 * @return text of the verse(s)
+	 */
 	@Column( name = "text", length = 300 )
-	@NotNull( message = "You must enter text for this passage" )
 	public String getText() {
 		return text;
 	}
@@ -80,8 +83,6 @@ public class Verse {
 		this.description = description;
 	}
 	
-	@ManyToOne
-	@JoinColumn( table = "translations" )
 	public Translation getTranslation() {
 		return translation;
 	}

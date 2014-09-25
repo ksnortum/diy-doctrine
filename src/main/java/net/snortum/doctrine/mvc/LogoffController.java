@@ -1,6 +1,6 @@
 package net.snortum.doctrine.mvc;
 
-import net.snortum.doctrine.model.SessionInfo;
+import net.snortum.doctrine.util.SessionInfo;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-@RequestMapping( "/logoff" )
 public class LogoffController {
 	private static final Logger LOG = Logger.getLogger( LogoffController.class );
 	
@@ -29,7 +28,7 @@ public class LogoffController {
 	 * @param model Model to remove editor from
 	 * @return page to display after logoff
 	 */
-	@RequestMapping( value = "frame" )
+	@RequestMapping( "/logoff" )
 	public String logoffEditor( ModelMap model ) {
 
 		if ( LOG.isInfoEnabled() ) {

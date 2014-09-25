@@ -15,13 +15,6 @@ div#header {
 	clear: both;
 }
 
-div#menu {
-	clear: both;
-	float: left;
-	width: 20%;
-	height: 400px;
-}
-
 div#body {
 	float: left;
 	width: 80%;
@@ -47,6 +40,13 @@ input[type="submit"] {
 	background-color: lightBlue; 
 	font-weight: bold;
 	border-style: none;
+}
+
+.menu {
+	clear: both;
+	float: left;
+	width: 20%;
+	height: 400px;
 }
 
 .center {

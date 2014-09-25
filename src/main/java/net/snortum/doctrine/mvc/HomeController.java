@@ -1,6 +1,6 @@
 package net.snortum.doctrine.mvc;
 
-import net.snortum.doctrine.model.SessionInfo;
+import net.snortum.doctrine.util.SessionInfo;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +36,9 @@ public class HomeController {
 
 		if ( sessionInfo.isLoggedIn() ) {
 			if ( LOG.isInfoEnabled() ) {
-				LOG.info( "Logged in, going to menu" );
+				LOG.info( "Logged in" );
 			}
-			return "menu";
+			return "main_logged_in";
 		}
 		
 		return "main";
