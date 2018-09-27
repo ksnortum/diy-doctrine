@@ -51,10 +51,11 @@
 	        
 	        <!-- War file web.xml warning -->
 	        <plugin>
+	        	<groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.6</version>
                 <configuration>
-                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                	<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                 </configuration>
             </plugin>
             		
@@ -127,7 +128,7 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4jVersion}</version>
 			
-			<!-- Excluded jar do to licensing issues -->
+			<!-- Excluded jars due to licensing issues -->
 			<exclusions>
 				<exclusion>
 					<groupId>com.sun.jmx</groupId>
