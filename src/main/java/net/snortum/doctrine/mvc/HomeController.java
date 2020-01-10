@@ -2,7 +2,8 @@ package net.snortum.doctrine.mvc;
 
 import net.snortum.doctrine.util.SessionInfo;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class HomeController {
-	private static final Logger LOG = Logger.getLogger( HomeController.class );
+	private static final Logger LOG = LogManager.getLogger();
 	
 	@Autowired
 	private SessionInfo sessionInfo;

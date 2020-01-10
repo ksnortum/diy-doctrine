@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<springVersion>3.2.10.RELEASE</springVersion>
-		<log4jVersion>1.2.17</log4jVersion>
+		<log4jVersion>2.13.0</log4jVersion>
 		<tilesVersion>3.0.3</tilesVersion>
 		<thymeleafVersion>2.1.2.RELEASE</thymeleafVersion>
 		<hibernateVersion>4.2.11.Final</hibernateVersion>
@@ -124,27 +124,15 @@
 
 		<!-- Logging -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
 			<version>${log4jVersion}</version>
-			
-			<!-- Excluded jars due to licensing issues -->
-			<exclusions>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-				
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4jVersion}</version>
 		</dependency>
 		
 		<!-- Testing -->

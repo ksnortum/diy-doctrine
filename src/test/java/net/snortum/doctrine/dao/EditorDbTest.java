@@ -16,14 +16,15 @@ import javax.validation.ValidatorFactory;
 
 import net.snortum.doctrine.model.Editor;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class EditorDbTest {
 	
-	private static final Logger LOG = Logger.getLogger( EditorDbTest.class );
+	private static final Logger LOG = LogManager.getLogger();
 	private static final String firstName = "Knute";
 	private static final String lastName = "Snortum";
 	private static final String userName = "ksnortum";

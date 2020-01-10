@@ -5,7 +5,8 @@ import java.util.List;
 
 import net.snortum.doctrine.model.Version;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class VersionsBean {
 	
-	private static Logger LOG = Logger.getLogger( VersionsBean.class );
+	private static Logger LOG = LogManager.getLogger();
 
 	public List<Version> getVersions() {
 		if ( LOG.isInfoEnabled() ) {

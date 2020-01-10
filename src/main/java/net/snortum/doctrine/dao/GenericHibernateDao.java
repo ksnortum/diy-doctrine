@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 import net.snortum.doctrine.util.HibernateUtil;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -22,8 +23,7 @@ import org.hibernate.Session;
 public class GenericHibernateDao<T, PK extends Serializable>
 		implements GenericDao<T, PK> {
 	
-	private static final Logger LOG = 
-			Logger.getLogger( GenericHibernateDao.class );
+	private static final Logger LOG = LogManager.getLogger();
 
 	private Class<T> type;
 

@@ -7,7 +7,8 @@ import net.snortum.doctrine.model.Editor;
 import net.snortum.doctrine.util.SessionInfo;
 import net.snortum.doctrine.util.VersionsBean;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping( "/login" )
 public class LoginController {
-	private static final Logger LOG = Logger.getLogger( LoginController.class );
+	private static final Logger LOG = LogManager.getLogger();
 
 	@Autowired
 	private EditorDao editorDao;
