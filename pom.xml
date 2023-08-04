@@ -16,7 +16,7 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<springVersion>3.2.10.RELEASE</springVersion>
+		<springVersion>4.3.30.RELEASE</springVersion>
 		<log4jVersion>2.17.1</log4jVersion>
 		<tilesVersion>3.0.3</tilesVersion>
 		<thymeleafVersion>2.1.2.RELEASE</thymeleafVersion>
